@@ -1,0 +1,261 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Paper + ink: cool, quiet surfaces so data carries the color. */
+  --background: #f4f5f7;
+  --foreground: #171a1f;
+  --card: #ffffff;
+  --card-foreground: #171a1f;
+  --popover: #ffffff;
+  --popover-foreground: #171a1f;
+
+  /* Univalle carmine: the only interactive/identity color. */
+  --primary: #a31621;
+  --primary-foreground: #fff8f4;
+
+  --secondary: #eceef1;
+  --secondary-foreground: #171a1f;
+  --muted: #eceef1;
+  --muted-foreground: #5d6775;
+  --accent: #f3e9ea;
+  --accent-foreground: #7a1220;
+  --destructive: #c22a2a;
+  --destructive-foreground: #ffffff;
+
+  --border: #e2e5ea;
+  --input: #d8dde3;
+  --ring: #a31621;
+
+  /* Mustard spark (current period, live markers). */
+  --spark: #d9a21b;
+
+  --chart-1: #1b6b40;
+  --chart-2: #d9a21b;
+  --chart-3: #c22a2a;
+  --chart-4: #5d6775;
+  --chart-5: #a31621;
+
+  /* Grade scale: performance is the colour system. */
+  --grade-top-bg: #1b6b40;
+  --grade-top-fg: #f2faf5;
+  --grade-high-bg: #dfefe5;
+  --grade-high-fg: #14532d;
+  --grade-pass-border: #a9cdb9;
+  --grade-fail-bg: #f7e2e2;
+  --grade-fail-fg: #8f1d1d;
+
+  --radius: 0.5rem;
+
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+  --background: #121417;
+  --foreground: #e7e9ec;
+  --card: #191c20;
+  --card-foreground: #e7e9ec;
+  --popover: #1b1f24;
+  --popover-foreground: #e7e9ec;
+
+  --primary: #c33a43;
+  --primary-foreground: #fff5f3;
+
+  --secondary: #22262c;
+  --secondary-foreground: #e7e9ec;
+  --muted: #1f2329;
+  --muted-foreground: #9aa4b1;
+  --accent: #2b2225;
+  --accent-foreground: #f0c9cd;
+  --destructive: #d24b4b;
+  --destructive-foreground: #ffffff;
+
+  --border: #272c33;
+  --input: #313741;
+  --ring: #c33a43;
+
+  --spark: #e3b23c;
+
+  --chart-1: #4caf7d;
+  --chart-2: #e3b23c;
+  --chart-3: #d24b4b;
+  --chart-4: #9aa4b1;
+  --chart-5: #c33a43;
+
+  --grade-top-bg: #2e7d4f;
+  --grade-top-fg: #effaf4;
+  --grade-high-bg: #1c3a29;
+  --grade-high-fg: #9fd8b5;
+  --grade-pass-border: #3c6b52;
+  --grade-fail-bg: #3b2130;
+  --grade-fail-fg: #ef9a9a;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-spark: var(--spark);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 3px);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-variant-numeric: tabular-nums;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* Touch: kill the double-tap delay and the default tap highlight. */
+  a,
+  button,
+  [role="button"],
+  summary,
+  label {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Anchored sections clear the sticky mobile header. */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+@layer components {
+  /* Grade chip: the ordered 0.0–5.0 scale is the app's colour language. */
+  .chip-grade {
+    @apply inline-flex h-6.5 min-w-11 items-center justify-center rounded-md border border-transparent px-1.5 text-[13px] font-semibold tabular-nums;
+  }
+
+  .chip-grade[data-band="top"] {
+    background: var(--grade-top-bg);
+    color: var(--grade-top-fg);
+  }
+
+  .chip-grade[data-band="high"] {
+    background: var(--grade-high-bg);
+    color: var(--grade-high-fg);
+  }
+
+  .chip-grade[data-band="pass"] {
+    border-color: var(--grade-pass-border);
+    color: var(--foreground);
+  }
+
+  .chip-grade[data-band="fail"] {
+    background: var(--grade-fail-bg);
+    color: var(--grade-fail-fg);
+  }
+
+  .chip-grade[data-band="raw"] {
+    @apply border-dashed border-border bg-transparent text-muted-foreground;
+  }
+
+  /* Period spine: one orchestrated load moment. */
+  .spine-track {
+    transform-origin: left center;
+    animation: spine-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .spine-node {
+    animation: spine-node-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 200ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .spine-track,
+    .spine-node {
+      animation: none;
+    }
+
+    *,
+    ::before,
+    ::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@keyframes spine-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes spine-node-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
